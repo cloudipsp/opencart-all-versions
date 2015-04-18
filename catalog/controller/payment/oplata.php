@@ -7,8 +7,8 @@ class ControllerPaymentOplata extends Controller {
 		$this->load->model('checkout/order');
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$server_back = str_replace('&nbsp;', '&', $this->config->get('oplata_server_back'));
-		$backref = str_replace('&nbsp;', '&', $this->config->get('oplata_backref'));
+		$server_back = str_replace('&amp;', '&', $this->config->get('oplata_server_back'));
+		$backref = str_replace('&amp;', '&', $this->config->get('oplata_backref'));
 		
         $oplata_args = array('order_id' => $order_id . Oplata::ORDER_SEPARATOR . time(),
             'merchant_id' => $this->config->get('oplata_merchant'),
