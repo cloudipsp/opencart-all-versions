@@ -1,4 +1,4 @@
 <?php
 // Text
-$_['text_title'] = 'Pay via Oplata';
+$_['text_title'] = 'Pay with Visa/MasterCard';
 ?>

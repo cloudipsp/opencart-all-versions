@@ -1,4 +1,4 @@
 <?php
 // Text
-$_['text_title'] = 'Оплата через платежную систему Oplata';
+$_['text_title'] = 'Оплатить с помощью карты  VISA/MasterCard';
 ?>
