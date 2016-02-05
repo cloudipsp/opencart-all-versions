@@ -1,19 +1,24 @@
 <?php
 // Heading
-$_['heading_title']      = 'Oplata';
+$_['heading_title']      = 'Fondy (Visa/MasterCard)';
 
 // Text 
 $_['text_payment']       = 'Оплата';
 $_['text_oplata']       	 = '<a onclick="window.open(\'http://oplata.com/\');"><img src="view/image/payment/oplata.png" alt="Oplata" title="Oplata" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_success']       = 'Настройки модуля обновлены!';   
 $_['text_pay']           = 'Oplata';
-$_['text_card']          = 'Credit Card';
+$_['text_card']          = 'Visa/MasterCard';
 
 // Entry
 $_['entry_merchant']     = 'Merchant ID:';
 $_['entry_secretkey']    = 'Secret key:';
 
+$_['text_response_description']               = 'Текст ошибки:';
+$_['text_oplata_order_status']                = 'Статус заказа:';
+$_['text_response_code']                      = 'Код ошибки:';
+
 $_['entry_order_status'] = 'Статус заказа после оплаты:';
+$_['entry_order_process_status'] = 'Статус заказа в процессе:';
 $_['entry_currency']     = 'Валюта мерчанта';
 $_['entry_backref']      = 'Ссылка возврата клиента:<br /><span class="help">http://{your_domain}/index.php?route=payment/oplata/response</span>';
 $_['entry_server_back']  = 'Ссылка возврата для сервера:<br /><span class="help">http://{your_domain}/index.php?route=payment/oplata/callback</span>';

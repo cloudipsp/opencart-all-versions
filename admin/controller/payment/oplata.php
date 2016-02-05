@@ -27,6 +27,7 @@ class ControllerPaymentOplata extends Controller
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
+		$this->data['entry_order_process_status'] = $this->language->get('entry_order_process_status');
 
 		#$this->data['LUURL'] = "index.php?route=payment/oplata/callback";
 
@@ -64,9 +65,9 @@ class ControllerPaymentOplata extends Controller
 		$this->load->model('localisation/order_status');
 		
 		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		
+		$this->data['oplata_currencyc']= array('EUR','USD','GBP','RUB','UAH');
 		$arr = array( "oplata_merchant", "oplata_secretkey", "oplata_currency", "oplata_backref", "oplata_server_back",
-            "oplata_language", "oplata_status", "oplata_sort_order", "oplata_order_status_id" );
+            "oplata_language", "oplata_status", "oplata_sort_order", "oplata_order_status_id", "oplata_order_process_status_id" );
 
 		foreach ( $arr as $v )
 		{

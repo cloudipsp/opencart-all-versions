@@ -7,13 +7,18 @@ $_['text_payment']       = 'Payment';
 $_['text_oplata']       	 = '<a onclick="window.open(\'http://oplata.com/\');"><img src="view/image/payment/oplata.png" alt="Oplata" title="Oplata" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_success']       = 'Settings updated';   
 $_['text_pay']           = 'Oplata';
-$_['text_card']          = 'Credit Card';
+$_['text_card']          = 'Visa/MasterCard';
 
+$_['text_response_description']               = 'Error description:';
+$_['text_oplata_order_status']                = 'Order status:';
+$_['text_response_code']                      = 'Error code:';
 // Entry
+
 $_['entry_merchant']     = 'Merchant ID:';
 $_['entry_secretkey']    = 'Secret key:';
 
 $_['entry_order_status'] = 'Order status after payment:';
+$_['entry_order_process_status'] = 'Order status in progress:';
 $_['entry_currency']     = 'Currency : ';
 $_['entry_backref']      = 'Back refference :<br /><span class="help">http://{your_domain}/index.php?route=payment/oplata/response</span>';
 $_['entry_server_back']  = 'Server back refference :<br /><span class="help">http://{your_domain}/index.php?route=payment/oplata/callback</span>';

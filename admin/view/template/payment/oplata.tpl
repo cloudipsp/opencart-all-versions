@@ -33,18 +33,18 @@
 
            <tr>
             <td><?php echo $entry_currency; ?></td>
-            <td><input type="text" name="oplata_currency" value="<?php echo ($oplata_currency == "") ? "UAH" : $oplata_currency; ?>" /></td>
+             <td><select name="oplata_currency">
+              <?php foreach ($oplata_currencyc as $oplata_currenc) { ?>
+
+                      <?php if ($oplata_currenc == $oplata_currency) { ?>
+                      <option value="<?php echo $oplata_currenc; ?>" selected="selected"><?php echo $oplata_currenc; ?></option>
+                      <?php } else { ?>
+                      <option value="<?php echo $oplata_currenc; ?>"><?php echo $oplata_currenc; ?></option>
+                      <?php } ?>
+
+                      <?php } ?>
+                    </select></td>
           </tr>  
-
-           <tr>
-            <td><?php echo $entry_backref; ?></td>
-            <td><input type="text" name="oplata_backref" value="<?php echo $oplata_backref; ?>" /></td>
-          </tr>
-
-            <tr>
-                <td><?php echo $entry_server_back; ?></td>
-                <td><input type="text" name="oplata_server_back" value="<?php echo $oplata_server_back; ?>" /></td>
-            </tr>
 
             <tr>
             <td><?php echo $entry_language; ?></td>
@@ -63,10 +63,22 @@
                 <?php } ?>
               </select></td>
           </tr>
+            <tr>
+                <td><?php echo $entry_order_process_status; ?></td>
+                <td><select name="oplata_order_process_status_id">
+                        <?php
+                foreach ($order_statuses as $order_status) {
+
+                $st = ($order_status['order_status_id'] == $oplata_order_process_status_id) ? ' selected="selected" ' : "";
+                ?>
+                        <option value="<?php echo $order_status['order_status_id']; ?>" <?= $st ?> ><?php echo $order_status['name']; ?></option>
+                        <?php } ?>
+                    </select></td>
+            </tr>
                   <tr>
             <td><?php echo $entry_status; ?></td>
             <td><select name="oplata_status">
-                <? $st0 = $st1 = ""; 
+                <?php $st0 = $st1 = ""; 
                  if ( $oplata_status == 0 ) $st0 = 'selected="selected"';
                   else $st1 = 'selected="selected"';
                 ?>
