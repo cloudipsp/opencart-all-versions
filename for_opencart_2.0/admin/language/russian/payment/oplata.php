@@ -1,14 +1,14 @@
 <?php
 // Heading
-$_['heading_title']      = '(Visa/MasterCard)';
+$_['heading_title']      = 'Fondy';
 
 // Text
 $_['text_edit']       = 'Редакторование модуля';
 
 $_['text_payment']       = 'Оплата';
-$_['text_oplata']       	 = '<a onclick="window.open(\'http://oplata.com/\');"><img src="view/image/payment/oplata.png" alt="Oplata" title="Oplata" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_oplata']       	 = '<a onclick="window.open(\'http://fondy.eu\');"><img src="view/image/payment/oplata.png" alt="Fondy" title="Oplata" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_success']       = 'Настройки модуля обновлены!';   
-$_['text_pay']           = 'Oplata';
+$_['text_pay']           = 'Fondy';
 $_['text_card']          = 'Visa/MasterCard';
 
 // Entry

@@ -1,12 +1,12 @@
 <?php
 // Heading
-$_['heading_title']      = 'Oplata';
+$_['heading_title']      = 'Fondy';
 
 // Text 
 $_['text_payment']       = 'Payment';
-$_['text_oplata']       	 = '<a onclick="window.open(\'http://oplata.com/\');"><img src="view/image/payment/oplata.png" alt="Oplata" title="Oplata" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_oplata']       	 = '<a onclick="window.open(\'http://fondy.eu/\');"><img src="view/image/payment/oplata.png" alt="Fondy" title="Fondy" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_success']       = 'Settings updated';   
-$_['text_pay']           = 'Oplata';
+$_['text_pay']           = 'Fondy';
 $_['text_card']          = 'Credit Card';
 $_['text_response_description']               = 'Error text:';
 $_['text_oplata_order_status']                = 'Order status:';
