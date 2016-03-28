@@ -50,12 +50,20 @@ class ControllerPaymentOplata extends Controller {
         $data['oplata_args'] = $oplata_args;
         //$data['action'] = $this->url->link('payment/oplata');
         $data['button_confirm'] = $this->language->get('button_confirm');
-
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/oplata.tpl')) {
-            return $this->load->view($this->config->get('config_template') . '/template/payment/oplata.tpl', $data);
+        if(version_compare(VERSION, '2.1.0.2', '>')) {
+            if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/oplata.tpl')) {
+                return $this->load->view($this->config->get('config_template') . '/template/payment/oplata.tpl', $data);
+            } else {
+                return $this->load->view('/payment/oplata.tpl', $data);
+            }
         } else {
-            return $this->load->view('default/template/payment/oplata.tpl', $data);
+            if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/oplata.tpl')) {
+                return $this->load->view($this->config->get('config_template') . '/template/payment/oplata.tpl', $data);
+            } else {
+                return $this->load->view('default/template/payment/oplata.tpl', $data);
+            }
         }
+
         //$this->response->setOutput($this->load->view('payment/oplata.tpl', $data));
 	}
 

@@ -1,7 +1,7 @@
 <?php
 // Heading
 $_['heading_title']      = 'Fondy';
-
+$_['text_edit']       = 'Edit module';
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_oplata']       	 = '<a onclick="window.open(\'http://fondy.eu/\');"><img src="view/image/payment/oplata.png" alt="Fondy" title="Fondy" style="border: 1px solid #EEEEEE;" /></a>';
