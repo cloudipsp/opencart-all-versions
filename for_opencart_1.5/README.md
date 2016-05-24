@@ -2,8 +2,11 @@
 
 Работает с модулем simplechekout.
 
-Если vqmod не установлен вручную добавить скрипт  "<script src="https://api.fondy.eu/static_common/v1/checkout/ipsp.js"></script>".
+Если vqmod не установлен вручную добавить скрипт -
 
+```javascript
+<script src="https://api.fondy.eu/static_common/v1/checkout/ipsp.js"></script>
+```
 
 #Установка
 -------------
