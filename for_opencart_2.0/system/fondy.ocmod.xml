@@ -16,7 +16,7 @@
 			]]></add>
         </operation>
     </file>
-	<file path="catalog/view/theme/default/template/checkout/checkout.tpl">
+	<file path="catalog/view/theme/*/template/checkout/checkout.tpl">
         <operation>
             <search><![CDATA[<h1><?php echo $heading_title; ?></h1>]]></search>
             <add position="after"><![CDATA[
@@ -26,7 +26,7 @@
 			]]></add>
         </operation>
     </file>
-	<file path="catalog/view/theme/default/template/common/header.tpl">
+	<file path="catalog/view/theme/*/template/common/header.tpl">
         <operation>
             <search><![CDATA[<?php foreach ($styles as $style) { ?>]]></search>
             <add position="before"><![CDATA[
