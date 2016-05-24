@@ -4,7 +4,7 @@
 	<version><![CDATA[1.0]]></version>
 	<vqmver><![CDATA[2.4.0]]></vqmver>
 	<author><![CDATA[D.M.]]></author>
-	<file path="catalog/view/theme/default/template/common/" name="header.tpl">
+	<file path="catalog/view/theme/*/template/common/" name="header.tpl">
 		<operation>
 			<search position="before"><![CDATA[<?php foreach ($scripts as $script) { ?>]]></search>
 			<add><![CDATA[<script src="https://api.fondy.eu/static_common/v1/checkout/ipsp.js"></script>]]></add>
@@ -47,7 +47,7 @@ KEY UPDATE value =  '" . $value . "'");
 			<add><![CDATA[, $value='']]></add>
 		</operation>
 	</file>
-	<file path="catalog/view/theme/default/template/checkout/" name="checkout.tpl">
+	<file path="catalog/view/theme/*/template/checkout/" name="checkout.tpl">
 		<operation>
 			<search position="before"><![CDATA[<h1><?php echo $heading_title; ?></h1>]]></search>
 			<add><![CDATA[<?php if (isset($this->session->data ['oplata_error'])) { ?>
