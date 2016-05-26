@@ -151,10 +151,10 @@ class ControllerPaymentOplata extends Controller {
             return $this->language->get('error_merchant');
         }
 
-        $originalResponse = $response;
-        $strs = explode($this->SIGNATURE_SEPARATOR,$originalResponse['response_signature_string']);
-        $str = (str_replace($strs[0],$oplataSettings['secretkey'],$originalResponse['response_signature_string']));
-        if (sha1($str) != $originalResponse['signature']) {
+        $responseSignature = $response['signature'];
+        unset($response['response_signature_string']);
+		unset($response['signature']);
+		if (self::getSignature($response, $oplataSettings['secretkey']) != $responseSignature) {
             //echo 1;
             return $this->language->get('error_signature');
         }
