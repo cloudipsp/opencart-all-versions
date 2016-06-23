@@ -10,6 +10,8 @@
 -------------
 
 Примеры стилей :
+
+
 		'html , body' : {
 			'overflow' : 'hidden'
 		},'.col.col-shoplogo' : {
