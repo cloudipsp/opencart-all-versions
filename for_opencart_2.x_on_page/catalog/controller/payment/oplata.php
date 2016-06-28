@@ -153,8 +153,12 @@ class ControllerPaymentOplata extends Controller {
         }
 
         $responseSignature = $response['signature'];
+		if (isset($response['response_signature_string'])){
         unset($response['response_signature_string']);
+		}
+		if (isset($response['signature'])){
 		unset($response['signature']);
+		}
 		if (self::getSignature($response, $oplataSettings['secretkey']) != $responseSignature) {
             //echo 1;
             return $this->language->get('error_signature');
