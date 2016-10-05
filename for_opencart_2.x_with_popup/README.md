@@ -8,6 +8,7 @@ Installation
 4. Click "Install"
 5. Click the "Edit"
 6. Fill in the required fields, and save the changes
+
 -------------
 
 #RU
@@ -20,3 +21,5 @@ Installation
 4. Нажать кнопку "Установить"
 5. Нажать кнопку "Изменить"
 6. Заполнить необходимые поля и сохранить изменения.
+
+------------
