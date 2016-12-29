@@ -28,7 +28,8 @@ Styles :
 
 
 		'html , body' : {
-			'overflow' : 'hidden'
+			'overflow' : 'hidden',
+			'height' : 'auto'
 		},'.col.col-shoplogo' : {
 			'display' : 'none'
 		},
