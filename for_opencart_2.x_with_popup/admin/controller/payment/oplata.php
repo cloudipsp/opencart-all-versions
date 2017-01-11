@@ -77,7 +77,7 @@ class ControllerPaymentOplata extends Controller
 		$this->load->model('localisation/order_status');
 		
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		$data['oplata_currencyc']= array('EUR','USD','GBP','RUB','UAH');
+		$data['oplata_currencyc']= array('','EUR','USD','GBP','RUB','UAH');
 		$arr = array( "oplata_merchant", "oplata_secretkey", "oplata_backref", "oplata_server_back",
             "oplata_language", "oplata_status", "oplata_sort_order", "oplata_order_status_id", "oplata_order_process_status_id", "oplata_currency");
 
