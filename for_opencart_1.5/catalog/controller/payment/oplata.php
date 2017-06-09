@@ -85,6 +85,7 @@
 				$this->load->model('checkout/order');
 				$value=serialize($_POST);
 				if ($_POST['order_status'] == $this->ORDER_APPROVED) {
+					unset($this->session->data['cart']);
 					$this->redirect($this->url->link('checkout/success'));
 					}else{
 					$this->session->data ['oplata_error'] = $this->language->get('error_oplata').' '. $_POST['response_description'].'. '.$this->language->get('error_kod'). $_POST['response_code'] ;
