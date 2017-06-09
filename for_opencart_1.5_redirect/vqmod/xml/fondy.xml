@@ -1,0 +1,106 @@
+<!-- Created using vQmod XML Generator by UKSB - http://uksb.github.com/vqgen/ //-->
+<modification>
+	<id><![CDATA[payment_mod]]></id>
+	<version><![CDATA[1.0]]></version>
+	<vqmver><![CDATA[2.4.0]]></vqmver>
+	<author><![CDATA[D.M.]]></author>
+	<file path="admin/controller/extension/" name="payment.php">
+		<operation>
+			<search position="after" index="2"><![CDATA[$this->model_user_user_group->addPermission(]]></search>
+			<add><![CDATA[			if ($this->request->get['extension']=='oplata')
+			{
+				$this->model_setting_extension->fondy();
+			}]]></add>
+		</operation>
+	</file>
+	<file path="admin/model/setting/" name="extension.php">
+		<operation>
+			<search position="after" index="1"><![CDATA[class ModelSettingExtension extends Model {]]></search>
+			<add><![CDATA[public function fondy(){
+$this->db->query("CREATE TABLE IF NOT EXISTS `payment_fondy` (
+  `order_id` int(11) NOT NULL,
+  `value` mediumtext NOT NULL,
+  PRIMARY KEY (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+");}
+]]></add>
+		</operation>
+	</file>
+	<file path="catalog/model/checkout/" name="order.php">
+		<operation>
+			<search position="after" index="1"><![CDATA[$order_info = $this->getOrder($order_id);]]></search>
+			<add><![CDATA[if($order_info['payment_code']=='oplata' and  $value!='')
+		{
+			$this->db->query("INSERT INTO payment_fondy SET order_id = '" . (int)$order_id . "', value = '" . $value . "' ON DUPLICATE 
+KEY UPDATE value =  '" . $value . "'");
+		}
+]]></add>
+		</operation>
+		<operation>
+			<search position="iafter" index="1"><![CDATA[$notify = false]]></search>
+			<add><![CDATA[, $value='']]></add>
+		</operation>
+	</file>
+	<file path="catalog/view/theme/*/template/checkout/" name="checkout.tpl">
+		<operation>
+			<search position="before"><![CDATA[<h1><?php echo $heading_title; ?></h1>]]></search>
+			<add><![CDATA[<?php if (isset($this->session->data ['oplata_error'])) { ?>
+	<div class="warning"><?php echo $this->session->data ['oplata_error']; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close"></div>
+	<?php }; unset($this->session->data['oplata_error']); ?>]]></add>
+		</operation>
+	</file>
+	<file path="admin/view/template/sale/" name="order_info.tpl">
+		<operation>
+			<search position="after"><![CDATA[ <td><?php echo $payment_method; ?></td>]]></search>
+			<add><![CDATA[<?php if(isset($oplata_order_status)){ ?>
+          <tr>
+            <td><?php  echo $text_oplata_order_status; ?></td>
+            <td><?php echo $oplata_order_status; ?></td>
+          </tr>
+          <?php if(isset($oplata_response_description) and $oplata_response_description !='' ){ ?>
+          <tr>
+            <td><?php echo $text_response_description; ?></td>
+            <td><?php echo $oplata_response_description;  ?></td>
+          </tr>
+          <?php } ?>
+          <?php if(isset($oplata_response_code) and $oplata_response_code !=''){ ?>
+          <tr>
+            <td><?php echo $text_response_code; ?></td>
+            <td><?php echo $oplata_response_code;  ?></td>
+          </tr>
+          <?php } ?>
+          <?php } ?>]]></add>
+		</operation>
+	</file>
+	<file path="admin/controller/sale/" name="order.php">
+		<operation>
+			<search index="1" position="after"><![CDATA[$order_info = $this->model_sale_order->getOrder($order_id);]]></search>
+			<add><![CDATA[if($order_info['oplata_info']!='') {
+			$this->language->load('payment/oplata');
+			$oplata_info = (unserialize($order_info['oplata_info']));
+			//print_r ($oplata_info);
+				$this->data['oplata_order_status'] = $oplata_info['order_status'];
+				$this->data['oplata_response_description'] = $oplata_info['response_description'];
+				$this->data['oplata_response_code'] = $oplata_info['response_code'];
+				$this->data['text_response_description'] = $this->language->get('text_response_description');
+				$this->data['text_oplata_order_status'] = $this->language->get('text_oplata_order_status');
+				$this->data['text_response_code'] = $this->language->get('text_response_code');
+		}]]></add>
+		</operation>
+	</file>
+	<file path="admin/model/sale/" name="order.php">
+		<operation>
+			<search position="before"><![CDATA[return array(]]></search>
+			<add><![CDATA[$oplata_info='';
+			if($order_query->row['payment_code']=='oplata')
+			{
+				$oplata_info=$this->db->query("SELECT value FROM `payment_fondy` WHERE order_id = '" . (int)$order_id . "'");
+			}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA['payment_code'            => $order_query->row['payment_code'],]]></search>
+			<add><![CDATA['oplata_info'            =>  (empty($oplata_info->row['value'])) ? '' : $oplata_info->row['value'],]]></add>
+		</operation>
+	</file>
+</modification>
