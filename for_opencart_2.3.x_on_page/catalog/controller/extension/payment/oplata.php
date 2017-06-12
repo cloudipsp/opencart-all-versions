@@ -36,7 +36,7 @@
 			$oplata_args = array('order_id' => $order_id . $this->ORDER_SEPARATOR . time(),
             'merchant_id' => $this->config->get('oplata_merchant'),
             'order_desc' => $desc,
-            'amount' => $order_info['total'],
+            'amount' => round($order_info['total']*100),
             'currency' => $oplata_currency,
             'response_url' => $backref,
             'server_callback_url' => $callback,
@@ -45,7 +45,21 @@
 			);
 			
 			$oplata_args['signature'] = $this->getSignature($oplata_args, $this->config->get('oplata_secretkey'));
-			$data['oplata_args'] = $oplata_args;
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, 'https://api.fondy.eu/api/checkout/url/');
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+			curl_setopt($ch, CURLOPT_POST, true);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('request'=>$oplata_args)));
+			$result = json_decode(curl_exec($ch));
+			if ($result->response->response_status == 'failure') {
+				$out = array ('result' => false,
+							  'message' =>$result->response->error_message);
+			}else{
+			$out = array ('result' => true,
+						  'url' => $result->response->checkout_url);
+			}			  
+			$data['fondy'] = $out;
 			$data['styles'] = $this->config->get('oplata_styles');
 			$data['button_confirm'] = $this->language->get('button_confirm');
 			if(version_compare(VERSION, '2.1.0.2', '>')) {

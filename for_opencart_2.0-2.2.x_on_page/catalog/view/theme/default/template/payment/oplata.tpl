@@ -1,4 +1,4 @@
-
+<?php if ($fondy['result'] == false) echo $fondy['message']; ?>
 <div style="display: none" id="checkout">
     <div id="checkout_wrapper" ></div>
 </div>       
@@ -29,15 +29,5 @@ var checkoutStyles = {
             this.loadUrl(url);
         });
     };
-    var button = $ipsp.get("button");
-    button.setMerchantId(<?php echo $oplata_args['merchant_id']; ?>);
-    button.setAmount(<?php echo $oplata_args['amount']; ?>, '<?php echo $oplata_args['currency']; ?>', true);
-    button.setHost('api.fondy.eu');
-    button.addParam('order_desc','<?php echo $oplata_args['order_desc']; ?>');
-    button.addParam('order_id','<?php echo $oplata_args['order_id']; ?>');
-    button.addParam('lang','<?php echo $oplata_args['lang']; ?>');
-    button.addParam('server_callback_url','<?php echo $oplata_args['server_callback_url']; ?>');
-    button.addParam('sender_email','<?php echo $oplata_args['sender_email']; ?>');
-    button.setResponseUrl('<?php echo $oplata_args['response_url'] ?>');
-        checkoutInit(button.getUrl());
+	checkoutInit('<?php echo $fondy['url'] ?>');
 </script>
