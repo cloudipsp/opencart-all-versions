@@ -114,12 +114,14 @@
 		
 		public function callback() {
 			
-			$fap = json_decode(file_get_contents("php://input"));
-			$_POST=array();
-			foreach($fap as $key=>$val)
-			{
-				$_POST[$key] =  $val ;
-			}
+			if(empty($_POST)){
+				$fap = json_decode(file_get_contents("php://input"));
+				$_POST=array();
+				foreach($fap as $key=>$val)
+				{
+					$_POST[$key] =  $val ;
+				}
+			}	
 			
 			$this->language->load('extension/payment/oplata');
 			
