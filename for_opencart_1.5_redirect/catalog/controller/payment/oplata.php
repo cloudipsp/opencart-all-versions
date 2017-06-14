@@ -37,7 +37,7 @@
 			'order_id' => $order_id . $this->ORDER_SEPARATOR . time(),
             'merchant_id' => $this->config->get('oplata_merchant'),
             'order_desc' => $desc,
-            'amount' => round($order_info['total']*100),
+            'amount' => round($order_info['total']*$order_info['currency_value']*100),
             'currency' => $oplata_currency,
             'response_url' => $backref,
             'server_callback_url' => $callback,
