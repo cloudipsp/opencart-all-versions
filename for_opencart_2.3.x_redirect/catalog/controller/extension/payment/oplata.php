@@ -17,16 +17,7 @@
 			//print_r($order_info);
 			$backref = $this->url->link('extension/payment/oplata/response');
 			$callback = $this->url->link('extension/payment/oplata/callback');
-			$desc='';
-			foreach ($products as $product){
-				if (!next($products)) {
-					$desc.=$product['name'];
-				}
-				else {
-					$desc.=$product['name'].', ';
-				}
-				
-			}
+			$desc = $this->language->get('payment_desc') . $order_id;
 			if (($this->config->get('oplata_currency'))) {
 				$oplata_currency = $this->config->get('oplata_currency');
 				}else {
