@@ -17,20 +17,11 @@
 			$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 			$backref = $this->url->link('payment/oplata/response');
 			$callback = $this->url->link('payment/oplata/callback');
-			$desc='';
-			foreach ($products as $product){
-				if (!next($products)) {
-					$desc.=$product['name'];
-				}
-				else {
-					$desc.=$product['name'].', ';
-				}
-				
-			}
+			$desc = $this->language->get('order_desq') . $order_id;
 			if (($this->config->get('oplata_currency'))) {
-				$oplata_currency=$this->config->get('oplata_currency');
+				$oplata_currency = $this->config->get('oplata_currency');
 				}else {
-				$oplata_currency=$this->currency->getCode();
+				$oplata_currency = $this->currency->getCode();
 			}
 			
 			$oplata_args = array('order_id' => $order_id . $this->ORDER_SEPARATOR . time(),
@@ -119,14 +110,16 @@
 			
 			if(empty($_POST)){
 				$fap = json_decode(file_get_contents("php://input"));
-				$_POST=array();
+				$_POST = array();
+				if (empty($fap)) {
+					die('go away!');
+				}
 				foreach($fap as $key=>$val)
 				{
 					$_POST[$key] =  $val ;
 				}
-			}	
-			
-			
+			}		
+						
 			$this->language->load('payment/oplata');
 			
 			$options = array(
@@ -140,15 +133,15 @@
 				list($order_id,) = explode($this->ORDER_SEPARATOR, $_POST['order_id']);
 				
 				$this->load->model('checkout/order');
-				$value=serialize($_POST);
+				$value = serialize($_POST);
 				if ($_POST['order_status'] == $this->ORDER_APPROVED) {
 					$comment = "Fondy payment id : " . $_POST['payment_id'];
 					$order_info = $this->model_checkout_order->getOrder($order_id);
-					$this->model_checkout_order->confirm($order_id, $this->config->get('oplata_order_status_id'), $comment, $notify = false, $value);
-					echo 'done';
+					$this->model_checkout_order->confirm($order_id, $this->config->get('oplata_order_status_id'), $comment, $notify = true, $value);
+					echo 'Ok';
 					}else{
-					echo $paymentInfo;
-					
+					$this->model_checkout_order->confirm($order_id, $this->config->get('oplata_order_process_status_id'), $comment = '', $notify = true, $value='');
+					echo $paymentInfo;	
 				}
 			} 
 		}

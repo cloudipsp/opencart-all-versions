@@ -6,4 +6,5 @@ $_['error_signature'] = 'An error has occurred during payment. Signature is not 
 $_['error_transaction'] = 'Transaction has been declined.';
 $_['error_oplata'] = 'Transaction has been declined. Reason :';
 $_['error_kod'] = 'Error code :';
+$_['order_desq'] = 'Order pay №';
 ?>
