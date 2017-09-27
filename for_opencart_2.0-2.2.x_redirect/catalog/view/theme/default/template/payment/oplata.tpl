@@ -1,17 +1,12 @@
-<form action="<?php echo $oplata_args['url']; ?>" method="post">
-    <input type="hidden" name="merchant_id" value="<?php echo $oplata_args['merchant_id']; ?>">
-    <input type="hidden" name="order_id" value="<?php echo  $oplata_args['order_id']; ?>">
-    <input type="hidden" name="order_desc" value="<?php echo  $oplata_args['order_desc']; ?>">
-    <input type="hidden" name="amount" value="<?php echo $oplata_args['amount']; ?>">
-    <input type="hidden" name="currency" value="<?php echo $oplata_args['currency']; ?>">
-    <input type="hidden" name="response_url" value="<?php echo $oplata_args['response_url']; ?>">
-    <input type="hidden" name="server_callback_url" value="<?php echo $oplata_args['server_callback_url']; ?>">
-    <input type="hidden" name="sender_email" value="<?php echo $oplata_args['sender_email']; ?>">
-    <input type="hidden" name="lang" value="<?php echo $oplata_args['lang']; ?>">
-    <input type="hidden" name="signature" value="<?php echo $oplata_args['signature']; ?>">
-    <div class="buttons">
+<?php if($fondy_data['result'] === false) {?>
+<div class="alert alert-warning">
+			<?php echo $fondy_data['message']; ?>
+        <button type="button" class="close" data-dismiss="alert">×</button>
+</div>
+<?php }else{?>
+<div class="buttons">
         <div class="pull-right">
-            <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
+            <a href="<?php echo $fondy_data['url']; ?>" class="btn btn-primary"><?php echo $button_confirm; ?></a>
         </div>
-    </div>
-</form>
+</div>
+<?php }?>

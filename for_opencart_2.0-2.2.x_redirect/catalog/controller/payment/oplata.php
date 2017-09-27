@@ -19,26 +19,28 @@ class ControllerPaymentOplata extends Controller
         $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         $backref = $this->url->link('payment/oplata/response');
         $callback = $this->url->link('payment/oplata/callback');
-        $desc = $this->language->get('order_desq') . $order_id;
+        $desc = $order_id;
         if (($this->config->get('oplata_currency'))) {
             $oplata_currency = $this->config->get('oplata_currency');
         } else {
             $oplata_currency = $this->currency->getCode();
         }
-        $oplata_args = array('order_id' => $order_id . $this->ORDER_SEPARATOR . time(),
-            'merchant_id' => $this->config->get('oplata_merchant'),
+        $oplata_args = array(
+			'order_id' => $order_id . $this->ORDER_SEPARATOR,
+            'merchant_id' => trim($this->config->get('oplata_merchant')),
             'order_desc' => $desc,
             'amount' => round($order_info['total'] * $order_info['currency_value'] * 100),
             'currency' => $oplata_currency,
             'response_url' => $backref,
             'server_callback_url' => $callback,
             'lang' => $this->config->get('oplata_language'),
-            'sender_email' => $order_info['email']
+            'sender_email' => trim($order_info['email'])
         );
 
-        $oplata_args['signature'] = $this->getSignature($oplata_args, $this->config->get('oplata_secretkey'));
-        $oplata_args['url'] = 'https://api.fondy.eu/api/checkout/redirect/';
-        $data['oplata_args'] = $oplata_args;
+        $oplata_args['signature'] = $this->getSignature($oplata_args, trim($this->config->get('oplata_secretkey')));
+        $url = $this->generateFondyUrl($oplata_args);
+		
+        $data['fondy_data'] = $url;
         $data['button_confirm'] = $this->language->get('button_confirm');
         if (version_compare(VERSION, '2.1.0.2', '>')) {
             if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/oplata.tpl')) {
@@ -183,7 +185,23 @@ class ControllerPaymentOplata extends Controller
             return $str;
         }
     }
-
+	public function generateFondyUrl($oplata_args) {
+		$ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.fondy.eu/api/checkout/url/');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('request' => $oplata_args)));
+        $result = json_decode(curl_exec($ch));
+        if ($result->response->response_status == 'failure') {
+            $out = array('result' => false,
+                'message' => $result->response->error_message);
+        } else {
+            $out = array('result' => true,
+                'url' => $result->response->checkout_url);
+        }
+		return $out;
+	}
 }
 
 ?>
