@@ -16,8 +16,8 @@ class ControllerExtensionPaymentOplata extends Controller
         $order_id = $this->session->data['order_id'];
         $this->load->model('checkout/order');
         $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-        $backref = $this->url->link('extension/payment/oplata/response');
-        $callback = $this->url->link('extension/payment/oplata/callback');
+        $backref = $this->url->link('extension/payment/oplata/response', '', 'SSL');
+        $callback = $this->url->link('extension/payment/oplata/callback', '', 'SSL');
         $desc = $this->language->get('order_desq') . $order_id;
         if (($this->config->get('oplata_currency'))) {
             $oplata_currency = $this->config->get('oplata_currency');
@@ -93,16 +93,16 @@ class ControllerExtensionPaymentOplata extends Controller
             } else {
                 $this->cart->clear();
                 $this->session->data ['oplata_error'] = $this->language->get('error_oplata') . ' ' . $_POST['response_description'] . '. ' . $this->language->get('error_kod') . $_POST['response_code'];
-                $this->response->redirect($this->url->link('checkout/checkout'));
+                $this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
             }
 
         } else {
             if ($_POST['order_status'] == $this->ORDER_DECLINED) {
                 $this->session->data ['oplata_error'] = $this->language->get('error_oplata') . ' ' . $_POST['response_description'] . '. ' . $this->language->get('error_kod') . $_POST['response_code'];
-                $this->response->redirect($this->url->link('checkout/confirm'));
+                $this->response->redirect($this->url->link('checkout/confirm', '', 'SSL'));
             }
             $this->session->data ['oplata_error'] = $this->language->get('error_oplata') . ' ' . $_POST['response_description'] . '. ' . $this->language->get('error_kod') . $_POST['response_code'];
-            $this->response->redirect($this->url->link('checkout/confirm'));
+            $this->response->redirect($this->url->link('checkout/confirm', '', 'SSL'));
         }
     }
 

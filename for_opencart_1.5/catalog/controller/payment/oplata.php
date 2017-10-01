@@ -15,8 +15,8 @@
 			$this->load->model('checkout/order');
 			$products=$this->cart->getProducts();
 			$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-			$backref = $this->url->link('payment/oplata/response');
-			$callback = $this->url->link('payment/oplata/callback');
+			$backref = $this->url->link('payment/oplata/response', '', 'SSL');
+			$callback = $this->url->link('payment/oplata/callback', '', 'SSL');
 			$desc = $this->language->get('order_desq') . $order_id;
 			if (($this->config->get('oplata_currency'))) {
 				$oplata_currency = $this->config->get('oplata_currency');
@@ -90,19 +90,19 @@
 				$value=serialize($_POST);
 				if ($_POST['order_status'] == $this->ORDER_APPROVED) {
 					unset($this->session->data['cart']);
-					$this->redirect($this->url->link('checkout/success'));
+					$this->redirect($this->url->link('checkout/success', '', 'SSL'));
 					}else{
 					$this->session->data ['oplata_error'] = $this->language->get('error_oplata').' '. $_POST['response_description'].'. '.$this->language->get('error_kod'). $_POST['response_code'] ;
-					$this->redirect($this->url->link('checkout/checkout'));
+					$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 				}
 				
 				} else {
 				if ($_POST['order_status'] == $this->ORDER_DECLINED) {
 					$this->session->data ['oplata_error'] = $this->language->get('error_oplata').' '. $_POST['response_description'].'. '.$this->language->get('error_kod'). $_POST['response_code'] ;
-					$this->redirect($this->url->link('checkout/checkout'));
+					$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 				}
 				$this->session->data ['oplata_error'] = $this->language->get('error_oplata').' '. $_POST['response_description'].'. '.$this->language->get('error_kod'). $_POST['response_code'] ;
-				$this->redirect($this->url->link('checkout/checkout'));
+				$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 			}
 		}
 		
