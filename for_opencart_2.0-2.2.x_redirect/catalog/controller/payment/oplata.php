@@ -26,7 +26,7 @@ class ControllerPaymentOplata extends Controller
             $oplata_currency = $this->currency->getCode();
         }
         $oplata_args = array(
-			'order_id' => $order_id . $this->ORDER_SEPARATOR,
+			'order_id' => $order_id . $this->ORDER_SEPARATOR . time(),
             'merchant_id' => trim($this->config->get('oplata_merchant')),
             'order_desc' => $desc,
             'amount' => round($order_info['total'] * $order_info['currency_value'] * 100),
