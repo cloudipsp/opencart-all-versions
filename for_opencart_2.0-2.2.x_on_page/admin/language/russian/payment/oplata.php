@@ -21,9 +21,11 @@ $_['text_response_code']                      = 'Код ошибки:';
 
 $_['entry_order_status'] = 'Статус заказа после оплаты:';
 $_['entry_order_process_status'] = 'Статус заказа в процессе:';
+$_['entry_order_status_cancelled']    =  'Статус отмененного заказа:';
 $_['entry_currency']     = 'Валюта мерчанта';
 $_['entry_language']     = 'Язык страницы:';
 $_['entry_help_lang']    =  'по-умолчанию : RU';
+$_['entry_oplata_result']    =  'Страница успешного ответа';
 
 $_['entry_status']       = 'Статус:';
 $_['entry_sort_order']   = 'Порядок сортировки:';

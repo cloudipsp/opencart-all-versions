@@ -7,6 +7,8 @@
 		protected $SIGNATURE_SEPARATOR = '|';
 		protected $ORDER_APPROVED = 'approved';
 		protected $ORDER_DECLINED = 'declined';
+		protected $ORDER_PROCESSING = 'processing';
+		protected $ORDER_EXPIRED = 'expired';
 		
 		protected function index() {
 			
@@ -52,45 +54,22 @@
 			$this->render();
 		}
 		
-		public function confirm() {
-			
+		public function response() {
+
+			$this->language->load('payment/oplata');
 			$this->load->model('checkout/order');
 			
-			$order_id = $this->session->data['order_id'];
-			
-			$this->model_checkout_order->confirm($order_id, $this->config->get('oplata_order_process_status_id'), $comment = '', $notify = false, $value='');
-			
-			$this->redirect($this->url->link('checkout/success'));
-		}
-		
-		public function response() {
-			$this->language->load('payment/oplata');
-			
 			$options = array(
-            'merchant' => $this->config->get('oplata_merchant'),
-            'secretkey' => $this->config->get('oplata_secretkey')
+				'merchant' => $this->config->get('oplata_merchant'),
+				'secretkey' => $this->config->get('oplata_secretkey')
 			);
-			
+			$order_id = $this->session->data['order_id'];
+			$this->model_checkout_order->confirm($order_id, $this->config->get('oplata_order_process_status_id'), $comment = '', $notify = false, $value='');
+			unset($this->session->data['cart']);
 			$paymentInfo = $this->isPaymentValid($options, $this->request->post);
-			
-			if ($paymentInfo === true && $this->request->post['order_status'] != $this->ORDER_DECLINED) {
-				list($order_id,) = explode($this->ORDER_SEPARATOR, $this->request->post['order_id']);
-				
-				$this->load->model('checkout/order');
-				$value = serialize($this->request->post);
-				if ($this->request->post['order_status'] == $this->ORDER_APPROVED) {
-					unset($this->session->data['cart']);
-					$this->redirect($this->url->link('checkout/success', '', 'SSL'));
-					}else{
-					$this->session->data ['oplata_error'] = $this->language->get('error_oplata').' '. $this->request->post['response_description'].'. '.$this->language->get('error_kod'). $this->request->post['response_code'] ;
-					$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
-				}
-				
-				} else {
-				if ($this->request->post['order_status'] == $this->ORDER_DECLINED) {
-					$this->session->data ['oplata_error'] = $this->language->get('error_oplata').' '. $this->request->post['response_description'].'. '.$this->language->get('error_kod'). $this->request->post['response_code'] ;
-					$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
-				}
+			if ($paymentInfo === true && ($this->request->post['order_status'] != $this->ORDER_DECLINED or $this->request->post['order_status'] != $this->ORDER_EXPIRED)) {
+				$this->redirect($this->url->link('checkout/success', '', 'SSL'));			
+			} else {
 				$this->session->data ['oplata_error'] = $this->language->get('error_oplata').' '. $this->request->post['response_description'].'. '.$this->language->get('error_kod'). $this->request->post['response_code'] ;
 				$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 			}
@@ -102,13 +81,14 @@
 				$fap = json_decode(file_get_contents("php://input"));
 				$this->request->post = array();
 				if (empty($fap)) {
-					die('go away!');
+					die();
 				}
 				foreach($fap as $key=>$val)
 				{
 					$this->request->post[$key] =  $val ;
 				}
-			}					
+			}		
+						
 			$this->language->load('payment/oplata');
 			
 			$options = array(
@@ -117,23 +97,25 @@
 			);
 			
 			$paymentInfo = $this->isPaymentValid($options, $this->request->post);
-			
-			if ($paymentInfo === true && $this->request->post['order_status'] != $this->ORDER_DECLINED) {
-				list($order_id,) = explode($this->ORDER_SEPARATOR, $this->request->post['order_id']);
+			list($order_id,) = explode($this->ORDER_SEPARATOR, $this->request->post['order_id']);
+			$this->load->model('checkout/order');
+			if ($paymentInfo === true) {
 				
-				$this->load->model('checkout/order');
 				$value = serialize($this->request->post);
 				if ($this->request->post['order_status'] == $this->ORDER_APPROVED) {
 					$comment = "Fondy payment id : " . $this->request->post['payment_id'];
-					$order_info = $this->model_checkout_order->getOrder($order_id);			
-					$this->model_checkout_order->confirm($order_id, $this->config->get('oplata_order_status_id'), $comment, $notify = true, $value);
-					echo 'Ok';
-					}else{
-					$this->model_checkout_order->confirm($order_id, $this->config->get('oplata_order_process_status_id'), $comment = '', $notify = true, $value='');
-					echo $paymentInfo;
-					
+					$order_info = $this->model_checkout_order->getOrder($order_id);
+					$this->model_checkout_order->update($order_id, $this->config->get('oplata_order_status_id'), $comment, $notify = true, $value);
+					die('Ok');
+				}else if($this->request->post['order_status'] == $this->ORDER_PROCESSING){
+					$this->model_checkout_order->update($order_id, $this->config->get('oplata_order_process_status_id'), $comment = '', $notify = true, $value='');
+					die($paymentInfo);
+				}else if($this->request->post['order_status'] != $this->ORDER_DECLINED or $this->request->post['order_status'] != $this->ORDER_EXPIRED){
+					$comment = "Payment cancelled";
+					$this->model_checkout_order->update($order_id, $this->config->get('oplata_order_cancelled_status_id'), $comment, $notify = false, $override = false);
+					die;
 				}
-			} 
+			}
 		}
 		
 		public function isPaymentValid($oplataSettings, $response){
@@ -150,7 +132,7 @@
 				unset($response['signature']);
 			}
 			if (self::getSignature($response, $oplataSettings['secretkey']) != $responseSignature) {
-				//echo 1;
+				
 				return $this->language->get('error_signature');
 			}
 			return true;

@@ -75,6 +75,18 @@
                         <?php } ?>
                     </select></td>
             </tr>
+			 <tr>
+                <td><?php echo $entry_order_status_cancelled; ?></td>
+                <td><select name="oplata_order_cancelled_status_id">
+                        <?php
+                foreach ($order_statuses as $order_status) {
+
+                $st = ($order_status['order_status_id'] == $oplata_order_cancelled_status_id) ? ' selected="selected" ' : "";
+                ?>
+                        <option value="<?php echo $order_status['order_status_id']; ?>" <?= $st ?> ><?php echo $order_status['name']; ?></option>
+                        <?php } ?>
+                    </select></td>
+            </tr>
                   <tr>
             <td><?php echo $entry_status; ?></td>
             <td><select name="oplata_status">

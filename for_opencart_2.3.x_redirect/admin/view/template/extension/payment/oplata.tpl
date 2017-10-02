@@ -41,7 +41,6 @@
               <?php } ?>
               </div>
           </div>
-
           <div class="form-group">
               <label class="col-sm-2 control-label" ><?php echo $entry_currency; ?></label>
               <div class="col-sm-10">
@@ -80,7 +79,19 @@
               </select> </div>
           </div>
 
+			<div class="form-group">
+              <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status_cancelled; ?></label>
+              <div class="col-sm-10">
+                  <select name="oplata_order_cancelled_status_id" class="form-control">
+                <?php 
+                foreach ($order_statuses as $order_status) { 
 
+                $st = ($order_status['order_status_id'] == $oplata_order_cancelled_status_id) ? ' selected="selected" ' : ""; 
+                ?>
+                <option value="<?php echo $order_status['order_status_id']; ?>" <?= $st ?> ><?php echo $order_status['name']; ?></option>
+                <?php } ?>
+              </select> </div>
+          </div>
 
 
           <div class="form-group">
@@ -113,18 +124,6 @@
               </select>
           </div>
         </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-                <div class="col-sm-10">
-            <input type="text" name="oplata_sort_order" value="<?php echo $oplata_sort_order; ?>" size="100" class="form-control" />
-                </div>
-            </div>
-		  <div class="form-group">
-			  <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_styles; ?></label>
-			  <div class="col-sm-10">
-			    <textarea name="oplata_styles" rows="15" placeholder="Styles" placeholder="Chekout Styles" class="form-control"><?php echo isset($oplata_styles) ? $oplata_styles : ''; ?></textarea>
-			  </div>
-		  </div>
       </form>
     </div>
     </div>

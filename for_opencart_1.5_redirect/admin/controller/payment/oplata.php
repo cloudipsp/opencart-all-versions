@@ -17,7 +17,7 @@ class ControllerPaymentOplata extends Controller
 
 		$arr = array( 
 				"heading_title", "text_payment", "text_success", "text_pay", "text_card", 
-				"entry_merchant", "entry_secretkey", "entry_order_status",
+				"entry_merchant", "entry_secretkey", "entry_order_status", "entry_order_status_cancelled",
 				"entry_currency", "entry_backref", "entry_server_back", "entry_language", "entry_status",
 				"entry_sort_order", "error_permission", "error_merchant", "error_secretkey");
 
@@ -65,9 +65,9 @@ class ControllerPaymentOplata extends Controller
 		$this->load->model('localisation/order_status');
 		
 		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		$this->data['oplata_currencyc']= array('shop','EUR','USD','GBP','RUB','UAH');
+		$this->data['oplata_currencyc']= array('EUR','USD','GBP','RUB','UAH');
 		$arr = array( "oplata_merchant", "oplata_secretkey", "oplata_currency", "oplata_backref", "oplata_server_back",
-            "oplata_language", "oplata_status", "oplata_sort_order", "oplata_order_status_id", "oplata_order_process_status_id" );
+            "oplata_language", "oplata_status", "oplata_sort_order", "oplata_order_status_id", "oplata_order_process_status_id", "oplata_order_cancelled_status_id" );
 
 		foreach ( $arr as $v )
 		{

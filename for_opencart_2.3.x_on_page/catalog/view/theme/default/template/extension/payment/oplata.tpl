@@ -29,5 +29,9 @@ var checkoutStyles = {
             this.loadUrl(url);
         });
     };
-    checkoutInit('<?php echo $fondy['url'] ?>');
 </script>
+<div class="buttons">
+        <div class="pull-right">
+            <a onclick="checkoutInit('<?php echo $fondy['url'] ?>');" class="btn btn-primary"><?php echo $button_confirm; ?></a>
+        </div>
+</div>

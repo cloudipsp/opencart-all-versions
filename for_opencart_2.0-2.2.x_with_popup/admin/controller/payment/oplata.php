@@ -4,7 +4,7 @@ class ControllerPaymentOplata extends Controller
 	private $error = array(); 
 
 	public function index() {
-		//print_r ($this->session->data);
+
 		$this->load->language('payment/oplata');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->load->model('setting/setting');
@@ -29,8 +29,8 @@ class ControllerPaymentOplata extends Controller
 
 		$arr = array( 
 				"heading_title", "text_payment", "text_success", "text_pay", "text_card", 
-				"entry_merchant", "entry_secretkey", "entry_order_status",
-				"entry_currency", "entry_backref", "entry_server_back", "entry_language", "entry_status",
+				"entry_merchant", "entry_styles" , "entry_secretkey", "entry_order_status", "entry_oplata_result" ,
+				"entry_currency", "entry_backref", "entry_server_back", "entry_language", "entry_status", "entry_order_status_cancelled",
 				"entry_sort_order", "error_permission", "error_merchant", "error_secretkey", 'text_edit',"entry_help_lang");
 
 		foreach ($arr as $v)
@@ -78,15 +78,18 @@ class ControllerPaymentOplata extends Controller
 		
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 		$data['oplata_currencyc']= array('','EUR','USD','GBP','RUB','UAH');
-		$arr = array( "oplata_merchant", "oplata_secretkey", "oplata_backref", "oplata_server_back",
-            "oplata_language", "oplata_status", "oplata_sort_order", "oplata_order_status_id", "oplata_order_process_status_id", "oplata_currency");
+		$arr = array( "oplata_merchant", "oplata_secretkey", "oplata_result", "oplata_backref", "oplata_server_back",
+            "oplata_language", "oplata_status", "oplata_sort_order", "oplata_order_status_id", "oplata_order_process_status_id", "oplata_order_cancelled_status_id", "oplata_currency", "oplata_styles");
 
-
+		
+		
 
 		foreach ( $arr as $v )
 		{
 			$data[$v] = ( isset($this->request->post[$v]) ) ? $this->request->post[$v] : $this->config->get($v);
 		}
+
+
 //------------------------------------------------------------
 
 		$data['header'] = $this->load->controller('common/header');

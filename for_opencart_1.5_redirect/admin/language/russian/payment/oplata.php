@@ -19,6 +19,7 @@ $_['text_response_code']                      = 'Код ошибки:';
 
 $_['entry_order_status'] = 'Статус заказа после оплаты:';
 $_['entry_order_process_status'] = 'Статус заказа в процессе:';
+$_['entry_order_status_cancelled']    =  'Статус отмененного заказа:';
 $_['entry_currency']     = 'Валюта мерчанта';
 $_['entry_backref']      = 'Ссылка возврата клиента:<br /><span class="help">http://{your_domain}/index.php?route=payment/oplata/response</span>';
 $_['entry_server_back']  = 'Ссылка возврата для сервера:<br /><span class="help">http://{your_domain}/index.php?route=payment/oplata/callback</span>';

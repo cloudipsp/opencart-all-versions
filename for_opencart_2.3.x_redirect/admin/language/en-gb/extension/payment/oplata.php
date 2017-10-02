@@ -2,9 +2,6 @@
 // Heading
 $_['heading_title']      = 'Fondy';
 $_['text_edit']       = 'Edit module';
-$_['text_enabled']       = 'Enable';
-$_['text_disabled']       = 'Disable';
-$_['text_home']       = 'Dashboard';
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_oplata']       	 = '<a onclick="window.open(\'http://fondy.eu/\');"><img src="view/image/payment/oplata.png" alt="Fondy" title="Fondy" style="border: 1px solid #EEEEEE;" /></a>';
@@ -25,10 +22,12 @@ $_['entry_order_process_status'] = 'Order status in progress:';
 $_['entry_currency']     = 'Currency:';
 $_['entry_language']     = 'Language:';
 $_['entry_help_lang']    =  'Default : RU';
+$_['entry_order_status_cancelled']    =  'Order status in cancelled:';
 
 $_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Ordering:';
 $_['entry_styles']		=	'Fondy Styles';
+$_['entry_oplata_result']    =  'Result URL';
 // Error
 $_['error_permission']   = "You haven't permission !";
 $_['error_merchant']     = 'Merchant ID are incorrect!';

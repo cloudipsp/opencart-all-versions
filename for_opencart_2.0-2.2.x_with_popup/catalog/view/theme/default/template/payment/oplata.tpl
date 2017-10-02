@@ -23,7 +23,7 @@ margin: 20px auto;
 <script type="text/javascript">
     function checkoutInit(url) {
         $ipsp('checkout').scope(function() {
-            //this.setModal(true);
+           
             this.setCheckoutWrapper('#checkout_wrapper');
             this.addCallback(__DEFAULTCALLBACK__);
             this.action('decline',function(data,type){
@@ -42,10 +42,11 @@ margin: 20px auto;
             this.loadUrl(url);
         });
     };
-    checkoutInit('<?php echo $fondy['url'] ?>');
+   
 </script>
 <script>
 function callcbox() {
+	checkoutInit('<?php echo $fondy['url'] ?>');
     $.magnificPopup.open({
         items: {
             preloader: true,
@@ -56,16 +57,8 @@ function callcbox() {
     });
 }
 </script>
-<script>
-    $(document).ready(function(){
-        $.magnificPopup.open({
-            preloader: true,
-
-            items: {
-                src: $('#checkout_wrapper'),
-                type: 'inline'
-            },
-
-        });
-    });
-</script>
+<div class="buttons">
+        <div class="pull-right">
+            <a onclick="callcbox()" class="btn btn-primary"><?php echo $button_confirm; ?></a>
+        </div>
+</div>

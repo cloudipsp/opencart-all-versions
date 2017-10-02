@@ -19,6 +19,7 @@ $_['entry_secretkey']    = 'Secret key:';
 
 $_['entry_order_status'] = 'Order status after payment:';
 $_['entry_order_process_status'] = 'Order status in progress:';
+$_['entry_order_status_cancelled']    =  'Order status in cancelled:';
 $_['entry_currency']     = 'Currency : ';
 $_['entry_backref']      = 'Back refference :<br /><span class="help">http://{your_domain}/index.php?route=payment/oplata/response</span>';
 $_['entry_server_back']  = 'Server back refference :<br /><span class="help">http://{your_domain}/index.php?route=payment/oplata/callback</span>';
