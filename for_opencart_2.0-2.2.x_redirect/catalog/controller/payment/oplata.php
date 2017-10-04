@@ -91,7 +91,7 @@ class ControllerPaymentOplata extends Controller
                 die();
             }
             $this->request->post = array();
-            foreach ($fap as $key => $val) {
+            foreach ($callback as $key => $val) {
                 $this->request->post[$key] = $val;
             }
         }
