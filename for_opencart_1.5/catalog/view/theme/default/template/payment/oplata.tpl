@@ -4,7 +4,7 @@
 <div class="buttons">
     <div class="right"><a onclick="callcbox();"  id="payment" class="button"><span><?php echo $button_confirm; ?></span></a> </div>
 </div>
-<?php if ($fondy['result'] == false) echo $fondy['message']; ?>
+<?php if ($fondy['result'] == false) echo $fondy['message']; die;?>
 <div style="display: none" id="checkout">
     <div id="checkout_wrapper" ></div>
 </div>       

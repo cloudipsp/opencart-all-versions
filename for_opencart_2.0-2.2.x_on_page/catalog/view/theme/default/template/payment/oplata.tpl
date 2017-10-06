@@ -1,4 +1,4 @@
-<?php if ($fondy['result'] == false) echo $fondy['message']; ?>
+<?php if ($fondy['result'] == false) echo $fondy['message']; die;?>
 <div style="display: none" id="checkout">
     <div id="checkout_wrapper" ></div>
 </div>       
