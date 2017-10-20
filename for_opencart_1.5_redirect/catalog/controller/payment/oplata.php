@@ -110,7 +110,7 @@
 				}else if($this->request->post['order_status'] == $this->ORDER_PROCESSING){
 					$this->model_checkout_order->update($order_id, $this->config->get('oplata_order_process_status_id'), $comment = '', $notify = true, $value='');
 					die($paymentInfo);
-				}else if($this->request->post['order_status'] != $this->ORDER_DECLINED or $this->request->post['order_status'] != $this->ORDER_EXPIRED){
+				}else if($this->request->post['order_status'] == $this->ORDER_DECLINED or $this->request->post['order_status'] == $this->ORDER_EXPIRED){
 					$comment = "Payment cancelled";
 					$this->model_checkout_order->update($order_id, $this->config->get('oplata_order_cancelled_status_id'), $comment, $notify = false, $override = false);
 					die;
