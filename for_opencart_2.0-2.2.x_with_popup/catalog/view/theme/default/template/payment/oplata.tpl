@@ -16,7 +16,7 @@ margin: 20px auto;
 
     <div class="pull-right"><a onclick="callcbox();"  id="payment" class="btn btn-primary"><span><?php echo $button_confirm; ?></span></a> </div>
 </div>
-<?php if ($fondy['result'] == false) echo $fondy['message']; die;?>
+<?php if ($fondy['result'] == false) {echo $fondy['message']; die;}?>
 <div style="display: none" id="checkout">
     <div id="checkout_wrapper" ></div>
 </div>       
