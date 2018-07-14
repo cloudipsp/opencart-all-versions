@@ -21,7 +21,7 @@ class ControllerExtensionPaymentOplata extends Controller
         $backref = $this->url->link('extension/payment/oplata/response', '', true);
         $callback = $this->url->link('extension/payment/oplata/callback', '', true);
         $desc = $this->language->get('order_desq') . $order_id;
-        if (($this->config->get('payment_oplata_currency'))) {
+        if ($this->config->get('payment_oplata_currency') and $this->config->get('payment_oplata_currency') != ' ') {
             $payment_oplata_currency = $this->config->get('payment_oplata_currency');
         } else {
             $payment_oplata_currency = $this->session->data['currency'];
