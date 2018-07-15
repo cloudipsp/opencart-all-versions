@@ -45,10 +45,9 @@ class ControllerExtensionPaymentFondyBank extends Controller
         );
 		
         $payment_fondy_bank_args['signature'] = $this->getSignature($payment_fondy_bank_args, $this->config->get('payment_fondy_bank_secretkey'));
-        
-        $url = $this->generateFondyBankUrl($payment_fondy_bank_args);
-        
-        $data['fondy_bank_data'] = $url;
+
+        $data['url'] = 'https://api.fondy.eu/api/checkout/redirect/';
+        $data['fondy_data'] = $payment_fondy_bank_args;
 
         $data['button_confirm'] = $this->language->get('button_confirm');
         $this->load->model('checkout/order');
