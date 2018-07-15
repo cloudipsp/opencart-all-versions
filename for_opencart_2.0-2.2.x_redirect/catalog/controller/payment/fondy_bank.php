@@ -41,9 +41,8 @@ class ControllerPaymentFondyBank extends Controller
         );
 
         $fondy_bank_args['signature'] = $this->getSignature($fondy_bank_args, trim($this->config->get('fondy_bank_secretkey')));
-        $url = $this->generateFondyBankUrl($fondy_bank_args);
-		
-        $data['fondy_bank_data'] = $url;
+        $fondy_bank_args['url'] = 'https://api.fondy.eu/api/checkout/redirect/';
+        $data['fondy_bank_args'] = $fondy_bank_args;
         $data['button_confirm'] = $this->language->get('button_confirm');
         if (version_compare(VERSION, '2.1.0.2', '>')) {
             if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/fondy_bank.tpl')) {
@@ -166,7 +165,7 @@ class ControllerPaymentFondyBank extends Controller
             return $str;
         }
     }
-	public function generateFondyBankUrl($fondy_bank_args) {
+	/*public function generateFondyBankUrl($fondy_bank_args) {
 		$ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://api.fondy.eu/api/checkout/url/');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -182,7 +181,7 @@ class ControllerPaymentFondyBank extends Controller
                 'url' => $result->response->checkout_url);
         }
 		return $out;
-	}
+	}*/
 }
 
 ?>
