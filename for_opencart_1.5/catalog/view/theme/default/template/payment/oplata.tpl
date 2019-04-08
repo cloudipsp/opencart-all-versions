@@ -34,7 +34,7 @@ function callcbox() {
         $.colorbox({inline:true, scrolling:false, innerWidth:480,innerHeight:641, href:"#checkout_wrapper"});
 }
 </script>
-<?php if ($_GET['route'] == 'checkout/confirm') { ?>
+<?php if ($this->request->get['route'] == 'checkout/confirm') { ?>
 <script>
     $(document).ready(function(){
         $.colorbox({inline:true, scrolling:false, innerWidth:480,innerHeight:641, href:"#checkout_wrapper"});
