@@ -9,7 +9,7 @@ Installation
 5. Click the "Edit"
 6. Fill in the required fields, and save the changes
 
-If Findy scripts not included you need to add the following script on cart page -
+If Fondy scripts not included you need to add the following script on cart page -
 
 ```javascript
 <script src="https://api.fondy.eu/static_common/v1/checkout/ipsp.js"></script>
