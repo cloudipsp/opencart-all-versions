@@ -9,8 +9,8 @@ class ControllerExtensionPaymentOplata extends Controller
     protected $SIGNATURE_SEPARATOR = '|';
     protected $ORDER_APPROVED = 'approved';
     protected $ORDER_DECLINED = 'declined';
-	protected $ORDER_EXPIRED = 'expired';
-	protected $ORDER_PROCESSING = 'processing';
+    protected $ORDER_EXPIRED = 'expired';
+    protected $ORDER_PROCESSING = 'processing';
 
     public function index()
     {
@@ -65,17 +65,17 @@ class ControllerExtensionPaymentOplata extends Controller
     public function response()
     {
         $this->language->load('payment/oplata');
-		$this->load->model('checkout/order');
+        $this->load->model('checkout/order');
         $options = array(
             'merchant' => $this->config->get('oplata_merchant'),
             'secretkey' => $this->config->get('oplata_secretkey')
         );
 
         $paymentInfo = $this->isPaymentValid($options, $this->request->post);
-		$this->cart->clear();
+        $this->cart->clear();
         if ($paymentInfo === true && $this->request->post['order_status'] != $this->ORDER_DECLINED) {
-			$backref = $this->url->link('checkout/success', '', 'SSL');
-			$this->response->redirect($backref);	
+            $backref = $this->url->link('checkout/success', '', 'SSL');
+            $this->response->redirect($backref);
         } else {
             if ($this->request->post['order_status'] == $this->ORDER_DECLINED) {
                 $this->session->data ['oplata_error'] = $this->language->get('error_oplata') . ' ' . $this->request->post['response_description'] . '. ' . $this->language->get('error_kod') . $this->request->post['response_code'];
@@ -98,21 +98,21 @@ class ControllerExtensionPaymentOplata extends Controller
                 $this->request->post[$key] = $val;
             }
         }
-		
+
         $this->language->load('payment/oplata');
-	
+
         $options = array(
             'merchant' => $this->config->get('oplata_merchant'),
             'secretkey' => $this->config->get('oplata_secretkey')
         );
 
         $paymentInfo = $this->isPaymentValid($options, $this->request->post);
-		
-		list($order_id,) = explode($this->ORDER_SEPARATOR, $this->request->post['order_id']);
+
+        list($order_id,) = explode($this->ORDER_SEPARATOR, $this->request->post['order_id']);
         $this->load->model('checkout/order');
         $order_info = $this->model_checkout_order->getOrder($order_id);
         $total = round($order_info['total'] * $order_info['currency_value'] * 100);
-		
+
         if ($paymentInfo === true) {
             if ($this->request->post['order_status'] == $this->ORDER_APPROVED and $total == $this->request->post['amount']) {
                 $comment = "Fondy payment id : " . $this->request->post['payment_id'];
@@ -123,9 +123,9 @@ class ControllerExtensionPaymentOplata extends Controller
                 $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('oplata_order_process_status_id'), $comment, $notify = false, $override = false);
                 die($paymentInfo);
             } else if ($this->request->post['order_status'] == $this->ORDER_DECLINED or $this->request->post['order_status'] == $this->ORDER_EXPIRED){
-				$comment = "Payment cancelled";
-				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('oplata_order_cancelled_status_id'), $comment, $notify = false, $override = false);
-			}
+                $comment = "Payment cancelled";
+                $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('oplata_order_cancelled_status_id'), $comment, $notify = false, $override = false);
+            }
         }
     }
 
@@ -174,7 +174,7 @@ class ControllerExtensionPaymentOplata extends Controller
         $order_id = $data[0];
         $status = $data[1];
 
-        if ($status == $this->config->get('oplata_order_status_id') && !isset($this->session->data['add_order_history'])) {
+        if ($this->config->get('oplata_payment_type') == 'preauth' && $status == $this->config->get('oplata_order_status_id') && !isset($this->session->data['add_order_history'])) {
             $this->session->data['add_order_history'] = true;
 
             $this->load->model('checkout/order');
@@ -191,9 +191,9 @@ class ControllerExtensionPaymentOplata extends Controller
             $ch = curl_init('https://api.fondy.eu/api/capture/order_id');
 
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-type: application/json']);
             curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('request' => $request)));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['request' => $request]));
 
             $result = json_decode(curl_exec($ch));
 
@@ -214,5 +214,3 @@ class ControllerExtensionPaymentOplata extends Controller
         return substr(sha1($this->config->get('oplata_merchant')), 0, 6);
     }
 }
-
-?>
