@@ -5,6 +5,7 @@
   <input type="hidden" name="amount" value="<?php echo $oplata_args['amount']; ?>">
   <input type="hidden" name="currency" value="<?php echo $oplata_args['currency']; ?>">
   <input type="hidden" name="response_url" value="<?php echo $oplata_args['response_url']; ?>">
+  <input type="hidden" name="preauth" value="<?php echo $oplata_args['preauth']; ?>">
   <input type="hidden" name="server_callback_url" value="<?php echo $oplata_args['server_callback_url']; ?>">
   <input type="hidden" name="sender_email" value="<?php echo $oplata_args['sender_email']; ?>">
   <input type="hidden" name="lang" value="<?php echo $oplata_args['lang']; ?>">

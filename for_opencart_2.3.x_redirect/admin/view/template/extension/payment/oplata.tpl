@@ -42,6 +42,16 @@
               </div>
           </div>
           <div class="form-group">
+              <label class="col-sm-2 control-label" ><?php echo $entry_payment_type; ?></label>
+              <div class="col-sm-10">
+                  <select name="oplata_payment_type"  class="form-control">
+                      <option value="common"<?=$oplata_payment_type == 'common' ? ' selected' : '';?>><?=$entry_common_type;?></option>
+                      <option value="preauth"<?=$oplata_payment_type == 'preauth' ? ' selected' : '';?>><?=$entry_preauth_type;?></option>
+                  </select>
+              </div>
+          </div>
+
+          <div class="form-group">
               <label class="col-sm-2 control-label" ><?php echo $entry_currency; ?></label>
               <div class="col-sm-10">
                   <select name="oplata_currency"  class="form-control">
@@ -113,13 +123,8 @@
               <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
               <div class="col-sm-10">
               <select name="oplata_status" class="form-control">
-                <? $st0 = $st1 = ""; 
-                 if ( $oplata_status == 0 ) $st0 = 'selected="selected"';
-                  else $st1 = 'selected="selected"';
-                ?>
-
-                <option value="1" <?= $st1 ?> ><?php echo $text_enabled; ?></option>
-                <option value="0" <?= $st0 ?> ><?php echo $text_disabled; ?></option>
+                <option value="1" <?= $oplata_status == 1 ? 'selected="selected"' : '' ?>><?php echo $text_enabled; ?></option>
+                <option value="0" <?= $oplata_status == 0 ? 'selected="selected"' : '' ?> ><?php echo $text_disabled; ?></option>
 
               </select>
           </div>

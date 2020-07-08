@@ -21,6 +21,9 @@ $_['entry_order_status'] = 'Order status after payment:';
 $_['entry_order_process_status'] = 'Order status in progress:';
 $_['entry_currency']     = 'Currency:';
 $_['entry_language']     = 'Language:';
+$_['entry_payment_type']     = 'Payment Type:';
+$_['entry_common_type']     = 'Common';
+$_['entry_preauth_type']     = 'Capture pre-purchase';
 $_['entry_help_lang']    =  'Default : RU';
 $_['entry_order_status_cancelled']    =  'Order status in cancelled:';
 
