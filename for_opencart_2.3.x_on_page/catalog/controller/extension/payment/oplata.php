@@ -35,7 +35,8 @@ class ControllerExtensionPaymentOplata extends Controller
             'response_url' => $backref,
             'server_callback_url' => $callback,
             'lang' => $this->config->get('oplata_language'),
-            'sender_email' => $order_info['email']
+            'sender_email' => $order_info['email'],
+            'preauth' => $this->config->get('oplata_payment_type') == 'preauth' ? 'Y' : 'N'
         );
 
         $oplata_args['signature'] = $this->getSignature($oplata_args, $this->config->get('oplata_secretkey'));
