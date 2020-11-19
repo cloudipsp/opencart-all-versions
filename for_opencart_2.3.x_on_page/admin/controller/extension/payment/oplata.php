@@ -1,7 +1,20 @@
 <?php 
 class ControllerExtensionPaymentOplata extends Controller
 {
-	private $error = array(); 
+	private $error = array();
+
+    public function install()
+    {
+        $this->load->model('extension/event');
+        $this->model_extension_event->addEvent('oplata_preauth_capture', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/payment/oplata/capture');
+    }
+
+    public function uninstall()
+    {
+        $this->load->model('extension/event');
+        $this->model_extension_event->deleteEvent('oplata_preauth_capture');
+    }
+
 	public function index() {
 		
 		$this->load->language('extension/payment/oplata');
