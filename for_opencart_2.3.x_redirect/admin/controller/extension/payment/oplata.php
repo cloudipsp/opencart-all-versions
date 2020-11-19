@@ -40,8 +40,11 @@ class ControllerExtensionPaymentOplata extends Controller
 		$arr = array( 
 				"heading_title", "text_payment", "text_success", "text_pay", "text_card", 
 				"entry_merchant", "entry_styles" , "entry_secretkey", "entry_order_status",
-				"entry_currency", "entry_backref", "entry_server_back", "entry_payment_type", "entry_common_type", "entry_preauth_type", "entry_language", "entry_status","entry_order_status_cancelled",
-				"entry_sort_order", "error_permission", "error_merchant", "error_secretkey", 'text_edit',"entry_help_lang");
+				"entry_currency", "entry_backref", "entry_server_back", "entry_payment_type",
+				"entry_common_type", "entry_preauth_type", "entry_language", "entry_status","entry_order_status_cancelled",
+				"entry_sort_order", "error_permission", "error_merchant", "error_secretkey", 'text_edit',"entry_help_lang"
+		);
+
 		foreach ($arr as $v)
             $data[$v] = $this->language->get($v);
 		$data['button_save'] = $this->language->get('button_save');
@@ -79,10 +82,13 @@ class ControllerExtensionPaymentOplata extends Controller
 		
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 		$data['oplata_currencyc'] = array('','EUR','USD','GBP','RUB','UAH', 'AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 'BIF', 'BMD', 'BND', 'BOB', 'BRL', 'BSD', 'BTN', 'BWP', 'BYR', 'BZD', 'CAD', 'CDF', 'CHF', 'CLP', 'CNY', 'COP', 'CRC', 'CUP', 'CVE', 'CZK', 'DJF', 'DKK', 'DOP', 'DZD', 'EGP', 'ERN', 'ETB', 'FJD', 'FKP', 'GEL', 'GHS', 'GIP', 'GMD', 'GNF', 'GTQ', 'GYD', 'HKD', 'HNL', 'HRK', 'HTG', 'HUF', 'IDR', 'ILS', 'INR', 'IQD', 'IRR', 'ISK', 'JMD', 'JOD', 'JPY', 'KES', 'KGS', 'KHR', 'KMF', 'KPW', 'KRW', 'KWD', 'KYD', 'KZT', 'LAK', 'LBP', 'LKR', 'LRD', 'LSL', 'LTL', 'LVL', 'LYD', 'MAD', 'MDL', 'MGA', 'MKD', 'MMK', 'MNT', 'MOP', 'MUR', 'MVR', 'MWK', 'MXN', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NOK', 'NPR', 'NZD', 'OMR', 'PAB', 'PEN', 'PGK', 'PHP', 'PKR', 'PLN', 'PYG', 'QAR', 'RON', 'RSD', 'RWF', 'SAR', 'SBD', 'SCR', 'SDG', 'SEK', 'SGD', 'SHP', 'SLL', 'SOS', 'SRD', 'STD', 'SVC', 'SYP', 'SZL', 'THB', 'TJS', 'TMT', 'TND', 'TOP', 'TRY', 'TTD', 'TWD', 'TZS', 'UGX', 'UYU', 'UZS', 'VEF', 'VND', 'VUV', 'WST', 'XAF', 'XCD', 'XOF', 'XPF', 'YER', 'ZAR', 'ZMW', 'ZWD');
-		$arr = array( "oplata_merchant", "oplata_secretkey", "oplata_backref", "oplata_server_back","oplata_order_cancelled_status_id",
-            "oplata_language", "oplata_status", "oplata_sort_order", "oplata_order_status_id", "oplata_order_process_status_id", "oplata_currency", "oplata_payment_type", "oplata_styles");
-		
-		
+
+		$arr = array(
+			"oplata_merchant", "oplata_secretkey", "oplata_backref", "oplata_server_back","oplata_order_cancelled_status_id",
+            "oplata_language", "oplata_status", "oplata_sort_order", "oplata_order_status_id", "oplata_order_process_status_id",
+			"oplata_currency", "oplata_payment_type", "oplata_styles"
+		);
+
 		foreach ( $arr as $v )
 		{
 			$data[$v] = ( isset($this->request->post[$v]) ) ? $this->request->post[$v] : $this->config->get($v);

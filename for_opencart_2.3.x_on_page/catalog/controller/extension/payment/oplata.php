@@ -27,7 +27,8 @@ class ControllerExtensionPaymentOplata extends Controller
             $oplata_currency = $this->session->data['currency'];
         }
 
-        $oplata_args = array('order_id' => $order_id . $this->ORDER_SEPARATOR . time(),
+        $oplata_args = array(
+            'order_id' => $order_id . $this->ORDER_SEPARATOR . $this->getUniqueCode(),
             'merchant_id' => $this->config->get('oplata_merchant'),
             'order_desc' => $desc,
             'amount' => round($order_info['total'] * $order_info['currency_value'] * 100),
@@ -35,7 +36,8 @@ class ControllerExtensionPaymentOplata extends Controller
             'response_url' => $backref,
             'server_callback_url' => $callback,
             'lang' => $this->config->get('oplata_language'),
-            'sender_email' => $order_info['email']
+            'sender_email' => $order_info['email'],
+            'preauth' => $this->config->get('oplata_payment_type') == 'preauth' ? 'Y' : 'N'
         );
 
         $oplata_args['signature'] = $this->getSignature($oplata_args, $this->config->get('oplata_secretkey'));
@@ -127,7 +129,7 @@ class ControllerExtensionPaymentOplata extends Controller
 
             if ($this->request->post['order_status'] == $this->ORDER_APPROVED and $total == $this->request->post['amount']) {
                 $comment = "Fondy payment id : " . $this->request->post['payment_id'];
-                $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('oplata_order_status_id'), $comment, $notify = true, $override = false);
+                $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('oplata_payment_type') == 'preauth' ? $this->config->get('oplata_order_process_status_id') : $this->config->get('oplata_order_status_id'), $comment, $notify = true, $override = false);
                 die('Ok');
             } else if ($this->request->post['order_status'] == $this->ORDER_PROCESSING){
                 $comment = "Fondy payment id : " . $this->request->post['payment_id'] . $paymentInfo;
@@ -177,6 +179,51 @@ class ControllerExtensionPaymentOplata extends Controller
         } else {
             return $str;
         }
+    }
+
+    public function capture(&$route, &$data, &$out)
+    {
+        $order_id = $data[0];
+        $status = $data[1];
+
+        if ($this->config->get('oplata_payment_type') == 'preauth' && $status == $this->config->get('oplata_order_status_id') && !isset($this->session->data['add_order_history'])) {
+            $this->session->data['add_order_history'] = true;
+
+            $this->load->model('checkout/order');
+
+            $order = $this->model_checkout_order->getOrder($order_id);
+            $request = [
+                'order_id' => $order_id . $this->ORDER_SEPARATOR . $this->getUniqueCode(),
+                'merchant_id' => $this->config->get('oplata_merchant'),
+                'amount' => round($order['total'] * $order['currency_value'] * 100),
+                'currency' => $this->session->data['currency'] ?? $this->config->get('payment_oplata_currency')
+            ];
+
+            $request['signature'] = $this->getSignature($request, $this->config->get('oplata_secretkey'));
+            $ch = curl_init('https://api.fondy.eu/api/capture/order_id');
+
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-type: application/json']);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['request' => $request]));
+
+            $result = json_decode(curl_exec($ch));
+
+            if ($result->response->response_status != 'failure') {
+                $comment = "Fondy request status: " . $this->db->escape($result->response->response_status);
+            } else {
+                $comment = "Fondy request status: " . $this->db->escape($result->response->response_status) . ". Request id: " . $this->db->escape($result->response->request_id);
+            }
+
+            $this->model_checkout_order->addOrderHistory($order_id, $status, $comment, $notify = false, $override = false);
+        } elseif (isset($this->session->data['add_order_history'])) {
+            unset($this->session->data['add_order_history']);
+        }
+    }
+
+    public function getUniqueCode()
+    {
+        return substr(sha1($this->config->get('oplata_merchant')), 0, 6);
     }
 
 }
