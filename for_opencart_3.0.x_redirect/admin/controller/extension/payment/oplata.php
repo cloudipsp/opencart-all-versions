@@ -4,6 +4,18 @@ class ControllerExtensionPaymentOplata extends Controller
 {
     private $error = array();
 
+    public function install()
+    {
+        $this->load->model('setting/event');
+        $this->model_setting_event->addEvent('fondy_capture', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/payment/oplata/capture');
+    }
+
+    public function uninstall()
+    {
+        $this->load->model('setting/event');
+        $this->model_setting_event->deleteEventByCode('fondy_capture');
+    }
+
     public function index()
     {
         $this->load->language('extension/payment/oplata');
@@ -27,9 +39,12 @@ class ControllerExtensionPaymentOplata extends Controller
 
         $arr = array(
             "heading_title", "text_payment", "text_success", "text_pay", "text_card", 'entry_geo_zone', 'text_all_zones',
-            "entry_merchant", "entry_styles", "entry_secretkey", "entry_order_status",
-            "entry_currency", "entry_backref", "entry_server_back", "entry_language", "entry_status", "entry_order_status_cancelled",
-            "entry_sort_order", "error_permission", "error_merchant", "error_secretkey", 'text_edit', "entry_help_lang");
+            "entry_merchant", "entry_styles", "entry_secretkey", "entry_order_status","entry_currency", "entry_backref",
+            "entry_server_back", "entry_payment_type", "entry_common_type", "entry_preauth_type", "entry_language",
+            "entry_status", "entry_order_status_cancelled", "entry_sort_order", "error_permission", "error_merchant",
+            "error_secretkey", 'text_edit', "entry_help_lang"
+        );
+
         foreach ($arr as $v)
             $data[$v] = $this->language->get($v);
         $data['button_save'] = $this->language->get('button_save');
@@ -81,7 +96,8 @@ class ControllerExtensionPaymentOplata extends Controller
             "payment_oplata_sort_order",
             "payment_oplata_order_status_id",
             "payment_oplata_order_process_status_id",
-            "payment_oplata_currency"
+            "payment_oplata_currency",
+            "payment_oplata_type"
         );
 
         foreach ($array_data as $v) {
