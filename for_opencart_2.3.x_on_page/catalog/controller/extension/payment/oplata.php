@@ -196,7 +196,7 @@ class ControllerExtensionPaymentOplata extends Controller
                 'order_id' => $order_id . $this->ORDER_SEPARATOR . $this->getUniqueCode(),
                 'merchant_id' => $this->config->get('oplata_merchant'),
                 'amount' => round($order['total'] * $order['currency_value'] * 100),
-                'currency' => $this->session->data['currency'] ?? $this->config->get('payment_oplata_currency')
+                'currency' => $this->session->data['currency'] ? $this->session->data['currency'] : $this->config->get('payment_oplata_currency')
             ];
 
             $request['signature'] = $this->getSignature($request, $this->config->get('oplata_secretkey'));
