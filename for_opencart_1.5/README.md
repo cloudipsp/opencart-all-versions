@@ -4,12 +4,6 @@ required VQMod version not lower than 2.X.X.
 
 Works with simplechekout module.
 
-If vqmod not installed you need to add the following script -
-
-```javascript
-<script src="https://api.fondy.eu/static_common/v1/checkout/ipsp.js"></script>
-```
-
 Installation
 -------------
 1. Upload all of the contents in the "upload" directory to the root directory of your shop
@@ -24,12 +18,6 @@ Installation
 Для работы необходим vqmod версии не ниже 2.4.0.
 
 Работает с модулем simplechekout.
-
-Если vqmod не установлен вручную добавить скрипт -
-
-```javascript
-<script src="https://api.fondy.eu/static_common/v1/checkout/ipsp.js"></script>
-```
 
 Установка
 -------------

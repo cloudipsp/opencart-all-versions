@@ -1,43 +1,35 @@
-<?php if (isset($this->session->data ['oplata_error'])) { ?>
-<div class="warning"><?php echo $this->session->data ['oplata_error']; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close"></div>
-<?php }; unset($this->session->data['oplata_error']); ?>
-<div class="buttons">
-    <div class="right"><a onclick="callcbox();"  id="payment" class="button"><span><?php echo $button_confirm; ?></span></a> </div>
-</div>
-<?php if ($fondy['result'] == false) {echo $fondy['message']; die;}?>
-<div style="display: none" id="checkout">
-    <div id="checkout_wrapper" ></div>
-</div>       
-<script type="text/javascript">
-    function checkoutInit(url) {
-        $ipsp('checkout').scope(function() {
-            this.setCheckoutWrapper('#checkout_wrapper');
-            this.addCallback(__DEFAULTCALLBACK__);
-            this.action('show', function(data) {
-                $('#checkout_loader').remove();
-                $('#checkout').show();
-            });
-            this.action('hide', function(data) {
-                $('#checkout').hide();
-            });
-            this.action('resize', function(data) {
-                $('#checkout_wrapper').width(480).height(data.height);
-            });
-            this.loadUrl(url);
-        });
-    };
-        checkoutInit('<?php echo $fondy['url'] ?>');
-</script>
+<?php if (isset($error_message)): ?>
+  <div class="warning"><?php echo $error_message; ?></div>
+<?php elseif (!empty($fondy_options)): ?>
+  <link rel="stylesheet" href="https://pay.fondy.eu/latest/checkout-vue/checkout.css">
+  <div id="checkout-container"></div>
+  <script>
+    const initFondyWidget = () => fondy("#checkout-container", <?php echo $fondy_options; ?>);
 
-<script>
-function callcbox() {
-        $.colorbox({inline:true, scrolling:false, innerWidth:480,innerHeight:641, href:"#checkout_wrapper"});
-}
-</script>
-<?php if ($this->request->get['route'] == 'checkout/confirm') { ?>
-<script>
-    $(document).ready(function(){
-        $.colorbox({inline:true, scrolling:false, innerWidth:480,innerHeight:641, href:"#checkout_wrapper"});
-    });
-</script>
-<?php } ?>
+    if (!document.getElementById('fondy_script')){
+      let fondyScript = document.createElement('script');
+      fondyScript.src = 'https://pay.fondy.eu/latest/checkout-vue/checkout.js';
+      fondyScript.id = 'fondy_script'
+      fondyScript.onload = initFondyWidget;
+      document.head.appendChild(fondyScript);
+    }else initFondyWidget();
+  </script>
+<?php else: ?>
+  <form action="<?php echo $oplata_args['url']; ?>" method="post">
+    <input type="hidden" name="merchant_id" value="<?php echo $oplata_args['merchant_id']; ?>">
+    <input type="hidden" name="order_id" value="<?php echo  $oplata_args['order_id']; ?>">
+    <input type="hidden" name="order_desc" value="<?php echo  $oplata_args['order_desc']; ?>">
+    <input type="hidden" name="amount" value="<?php echo $oplata_args['amount']; ?>">
+    <input type="hidden" name="currency" value="<?php echo $oplata_args['currency']; ?>">
+    <input type="hidden" name="response_url" value="<?php echo $oplata_args['response_url']; ?>">
+    <input type="hidden" name="server_callback_url" value="<?php echo $oplata_args['server_callback_url']; ?>">
+    <input type="hidden" name="sender_email" value="<?php echo $oplata_args['sender_email']; ?>">
+    <input type="hidden" name="lang" value="<?php echo $oplata_args['lang']; ?>">
+    <input type="hidden" name="signature" value="<?php echo $oplata_args['signature']; ?>">
+    <div class="buttons">
+      <div class="right">
+        <input type="submit" value="<?php echo $button_confirm; ?>" class="button" />
+      </div>
+    </div>
+  </form>
+<?php endif; ?>

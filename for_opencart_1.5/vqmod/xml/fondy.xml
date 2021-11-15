@@ -4,12 +4,6 @@
 	<version><![CDATA[1.0]]></version>
 	<vqmver><![CDATA[2.4.0]]></vqmver>
 	<author><![CDATA[D.M.]]></author>
-	<file path="catalog/view/theme/*/template/common/" name="header.tpl">
-		<operation>
-			<search position="before"><![CDATA[<?php foreach ($scripts as $script) { ?>]]></search>
-			<add><![CDATA[<script src="https://api.fondy.eu/static_common/v1/checkout/ipsp.js"></script>]]></add>
-		</operation>
-	</file>
 	<file path="admin/controller/extension/" name="payment.php">
 		<operation>
 			<search position="after" index="2"><![CDATA[$this->model_user_user_group->addPermission(]]></search>

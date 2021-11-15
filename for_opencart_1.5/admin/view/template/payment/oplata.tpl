@@ -23,7 +23,7 @@
               <span class="error"><?php echo $error_merchant; ?></span>
               <?php } ?></td>
           </tr>
-          <tr>  
+          <tr>
             <td><span class="required">*</span> <?php echo $entry_secretkey; ?></td>
             <td><input type="text" name="oplata_secretkey" value="<?php echo $oplata_secretkey; ?>" />
               <?php if ($error_secretkey) { ?>
@@ -44,17 +44,27 @@
 
                       <?php } ?>
                     </select></td>
-          </tr>  
+          </tr>
 
             <tr>
             <td><?php echo $entry_language; ?></td>
             <td><input type="text" name="oplata_language" value="<?php echo ($oplata_language == "") ? "RU" : $oplata_language; ?>" /></td>
-          </tr> 
+          </tr>
 
-          <tr>
+            <tr>
+                <td><?php echo $entry_process_payment_type; ?></td>
+                <td>
+                    <select name="oplata_process_payment_type">
+                        <option value="redirect" <?php echo $oplata_process_payment_type == 'redirect' ? 'selected' : ''; ?>><?php echo $entry_redirect; ?></option>
+                        <option value="built_in_checkout" <?php echo $oplata_process_payment_type == 'built_in_checkout' ? 'selected' : ''; ?>><?php echo $entry_built_in_checkout; ?></option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
             <td><?php echo $entry_order_status; ?></td>
             <td><select name="oplata_order_status_id">
-                <?php 
+                <?php
                 foreach ($order_statuses as $order_status) { 
 
                 $st = ($order_status['order_status_id'] == $oplata_order_status_id) ? ' selected="selected" ' : ""; 
@@ -90,7 +100,7 @@
                   <tr>
             <td><?php echo $entry_status; ?></td>
             <td><select name="oplata_status">
-                <?php $st0 = $st1 = ""; 
+                <?php $st0 = $st1 = "";
                  if ( $oplata_status == 0 ) $st0 = 'selected="selected"';
                   else $st1 = 'selected="selected"';
                 ?>
