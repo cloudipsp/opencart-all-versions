@@ -108,13 +108,18 @@ class ModelExtensionPaymentOplata extends Model
             $reservationData['products'][] = [
                 'id' => $orderProduct['product_id'],
                 'name' => $orderProduct['name'],
-                'price' => $orderProduct['price'],
-                'total_amount' => $orderProduct['total'],
+                'price' => $this->formatPrice($orderProduct['price']),
+                'total_amount' => $this->formatPrice($orderProduct['total']),
                 'quantity' => $orderProduct['quantity'],
             ];
         }
 
         return base64_encode(json_encode($reservationData));
+    }
+
+    public function formatPrice($sum)
+    {
+        return number_format($sum, 2,'.','');
     }
 
     public function sendToAPI($endpoint, $requestData)
