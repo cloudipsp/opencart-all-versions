@@ -174,4 +174,3 @@ class ModelExtensionPaymentOplata extends Model
     }
 }
 
-?>

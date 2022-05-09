@@ -8,4 +8,3 @@ $_['error_transaction'] = 'Transaction has been declined.';
 $_['error_payment'] = '&nbspTransaction has been declined: ';
 $_['error_code'] = 'Error code: ';
 $_['order_desq'] = 'Order pay №';
-?>

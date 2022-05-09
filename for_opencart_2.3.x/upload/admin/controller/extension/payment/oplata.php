@@ -324,4 +324,4 @@ class ControllerExtensionPaymentOplata extends Controller
     }
 }
 
-?>
+

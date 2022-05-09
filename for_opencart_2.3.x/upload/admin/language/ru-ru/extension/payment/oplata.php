@@ -74,4 +74,3 @@ $_['tooltip_field_payment_id'] = 'Уникальный идентификато�
 $_['tooltip_btn_preauth_reverse'] = 'Доступно только на всю сумму заказа';
 
 $_['help_entry_environment'] = '<i class="fa fa-info-circle" aria-hidden="true"></i> Вам присвоен <a href="https://docs.fondy.eu/docs/page/2/">тестовый</a> <em>' . $_['entry_merchant'] . '</em> и <em>' . $_['entry_secretkey'] . '</em>';
-?>

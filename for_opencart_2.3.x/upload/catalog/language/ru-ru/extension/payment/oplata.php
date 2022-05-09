@@ -7,4 +7,3 @@ $_['error_transaction'] = 'Transaction has been declined.';
 $_['error_payment'] = '&nbspОплата отклонена по причине: ';
 $_['error_code'] = 'Код ошибки: ';
 $_['order_desq'] = 'Оплата заказа №:';
-?>
