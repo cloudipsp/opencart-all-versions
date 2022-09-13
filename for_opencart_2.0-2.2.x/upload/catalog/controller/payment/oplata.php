@@ -170,6 +170,11 @@ class ControllerPaymentOplata extends Controller
         $responseSignature = $request['signature'];
         unset($request['response_signature_string']);
         unset($request['signature']);
+
+        # API ^1.0.1
+        if (!empty($request['additional_info']))
+            $request['additional_info'] = htmlspecialchars_decode($request['additional_info']);
+
         $orderSignature = $this->model_payment_oplata->getSignature($request, $secretKey);
 
         if ($orderSignature != $responseSignature)

@@ -106,7 +106,7 @@ class ModelPaymentOplata extends Model
 
         foreach ($orderProducts as $orderProduct){
             $reservationData['products'][] = [
-                'id' => $orderProduct['product_id'],
+                'id' => (int)$orderProduct['product_id'],
                 'name' => $orderProduct['name'],
                 'price' => $this->formatPrice($orderProduct['price']),
                 'total_amount' => $this->formatPrice($orderProduct['total']),
@@ -119,7 +119,7 @@ class ModelPaymentOplata extends Model
 
     public function formatPrice($sum)
     {
-        return number_format($sum, 2,'.','');
+        return (float)number_format($sum, 2,'.','');
     }
 
     public function sendToAPI($endpoint, $requestData)
