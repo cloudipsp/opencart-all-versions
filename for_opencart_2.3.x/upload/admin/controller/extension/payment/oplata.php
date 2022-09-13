@@ -3,7 +3,7 @@
 class ControllerExtensionPaymentOplata extends Controller
 {
     private $error = [];
-    private $extensionVersion = '2.0.1';
+    private $extensionVersion = '2.0.2';
 
     public function install()
     {

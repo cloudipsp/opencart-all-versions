@@ -105,12 +105,27 @@ class ModelExtensionPaymentOplata extends Model
         ];
 
         foreach ($orderProducts as $orderProduct){
+            $productPriceWithTax = $orderProduct['price'] + $orderProduct['tax'];
+            $productTotalWitTax = $orderProduct['total'] + ($orderProduct['tax'] * $orderProduct['quantity']);
+
             $reservationData['products'][] = [
-                'id' => $orderProduct['product_id'],
+                'id' => (int)$orderProduct['product_id'],
                 'name' => $orderProduct['name'],
-                'price' => $this->formatPrice($orderProduct['price']),
-                'total_amount' => $this->formatPrice($orderProduct['total']),
-                'quantity' => $orderProduct['quantity'],
+                'price' => $this->formatPrice($productPriceWithTax),
+                'total_amount' => $this->formatPrice($productTotalWitTax),
+                'quantity' => (int)$orderProduct['quantity'],
+            ];
+        }
+
+        if (isset($this->session->data['shipping_method']['cost']) && $this->session->data['shipping_method']['cost'] > 0){
+            $shippingCoast = $this->getShippingCoast();
+            $reservationData['products'][] = [
+                'id' => 1,
+                'name' => $this->session->data['shipping_method']['title'],
+                'price' => $this->formatPrice($shippingCoast),
+                'total_amount' => $this->formatPrice($shippingCoast),
+                'quantity' => 1,
+                'payment_object' => 'shipping',
             ];
         }
 
@@ -119,7 +134,19 @@ class ModelExtensionPaymentOplata extends Model
 
     public function formatPrice($sum)
     {
-        return number_format($sum, 2,'.','');
+        return (float)number_format($sum, 2,'.','');
+    }
+
+    public function getShippingCoast()
+    {
+        $currency_code = $this->session->data['currency'];
+        $currency_value = $this->currency->getValue($this->session->data['currency']);
+
+        return $this->currency->format(
+            $this->tax->calculate(
+                $this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']
+            ), $currency_code, $currency_value, false
+        );
     }
 
     public function sendToAPI($endpoint, $requestData)

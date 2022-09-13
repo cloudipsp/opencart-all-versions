@@ -5,12 +5,12 @@ $_['heading_title'] = 'Fondy';
 // Tab
 $_['tab_general'] = 'Основные настройки';
 $_['tab_order_status'] = 'Статус заказа';
-    $_['tab_style'] = 'Стили';
+$_['tab_style'] = 'Стили';
 
 // Text
-$_['text_edit'] = 'Редакторование модуля';
+$_['text_edit'] = 'Редактирование модуля';
 $_['text_payment'] = 'Оплата';
-$_['text_oplata'] = '<a onclick="window.open(\'http://fondy.eu\');"><img src="view/image/payment/oplata.png" alt="Fondy" title="Fondy" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_oplata'] = '<a onclick="window.open(\'https://fondy.io\');"><img src="view/image/payment/oplata.png" alt="Fondy" title="Fondy" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_success'] = 'Настройки модуля обновлены!';
 $_['text_pay'] = 'Fondy';
 $_['text_card'] = 'Visa/MasterCard';
@@ -70,7 +70,7 @@ $_['tooltip_entry_merchant'] = 'Можно найти в портале Fondy (�
 $_['tooltip_entry_secretkey'] = 'Можно найти в портале Fondy (раздел \'Настройки мерчанта\' → \'Технические\')';
 $_['tooltip_entry_process_payment_type'] = 'Выберите где будет отображаться платежная страница Fondy';
 $_['tooltip_entry_payment_type'] = 'При выборе \'' . $_['entry_preauth_type'] . '\' сумма заказа блокируется на карте плательщика';
-$_['tooltip_field_payment_id'] = 'Уникальный идентификатор платежа, присвоенный платежным шлюзом FONDY';
+$_['tooltip_field_payment_id'] = 'Уникальный идентификатор платежа, присвоенный платежным шлюзом Fondy';
 $_['tooltip_btn_preauth_reverse'] = 'Доступно только на всю сумму заказа';
 
 $_['help_entry_environment'] = '<i class="fa fa-info-circle" aria-hidden="true"></i> Вам присвоен <a href="https://docs.fondy.eu/docs/page/2/">тестовый</a> <em>' . $_['entry_merchant'] . '</em> и <em>' . $_['entry_secretkey'] . '</em>';

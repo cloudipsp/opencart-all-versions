@@ -1,3 +1,15 @@
+# UK
+
+Встановлення
+-------------
+1. [Завантажити модуль](https://github.com/cloudipsp/opencart-all-versions/raw/master/for_opencart_2.3.x/fondy.ocmod.zip "Завантажити") і встановити його через установку модулів opencart (``Навігація/Модулі/Установка модулів``).
+   >**або** [завантажити репозиторій](https://github.com/cloudipsp/opencart-v3/archive/main.zip) та скопіювати все з каталогу `upload` в корінь сайту (якщо встановлена стороння тема - каталог `payment` з ```/catalog/view/theme/default/template/payment/``` скопіювати в каталог з темою)
+2. У списку модулів (``Навігація/Модулі/Модулі/Оплата``) знайти спосіб оплати ***Fondy*** та натиснути кнопку ***"Інсталювати"***.
+3. Натиснути кнопку ***"Редагувати"*** та заповнити необхідні поля.
+4. Зберегти зміни.
+
+-------------
+
 # EN
 
 Installation
@@ -7,16 +19,4 @@ Installation
 2. In list of all the available payment methods ``Navigation/Extenson/Extenson/Paymens`` find payment method ***Fondy*** and click ***"Install"*** button.
 3. Click the ***"Edit"*** button and fill in the required fields.
 4. Save the changes.
--------------
-
-# RU
-
-Установка
--------------
-1. [Скачать модуль](https://github.com/cloudipsp/opencart-all-versions/raw/master/for_opencart_2.3.x/fondy.ocmod.zip "Скачать")  и установить его через установщик модулей opencart (``Навигация/Расширения/Установка расширений``).
-   >**или** скопировать все из папки `upload` в корень сайта (если установлена сторонняя тема папку `payment` из ```/catalog/view/theme/default/template/payment/``` скопировать в папку с темой)
-2. В списке расширений (``Навигация/Расширения/Расширения/Оплата``) найти способ оплаты ***Fondy*** и нажать кнопку ***"Активировать"***.
-3. Нажать кнопку ***"Редактировать"*** и заполнить необходимые поля.
-4. Сохранить изменения.
-
 -------------
